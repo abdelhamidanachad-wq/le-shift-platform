@@ -1,0 +1,11 @@
+export type Skill = { id: string; title: string; description: string; category: string; price: number; expected_roi: string; type: 'mcp' | 'prompt'; timeSaved: string; tag: string; icon: string };
+
+// Temporary catalogue data; replace with Supabase queries once credentials are configured.
+export const skills: Skill[] = [
+  { id: 'audit-financier', title: 'Générateur d’audit financier', description: 'Transformez vos exports comptables en synthèses structurées, anomalies à vérifier et recommandations actionnables.', category: 'Finance & Audit', price: 49, expected_roi: '4 h / semaine', type: 'prompt', timeSaved: '4 h / sem.', tag: 'Productivité', icon: '◈' },
+  { id: 'scraper-seo', title: 'Radar SEO concurrentiel', description: 'Cartographiez les mots-clés, les écarts de contenu et les opportunités organiques de votre marché.', category: 'Marketing & SEO', price: 79, expected_roi: '6 h / semaine', type: 'mcp', timeSaved: '6 h / sem.', tag: 'Très demandé', icon: '⌁' },
+  { id: 'brief-strategique', title: 'Brief stratégique express', description: 'Passez d’un brief diffus à un plan clair : enjeux, audiences, angles créatifs et indicateurs de réussite.', category: 'Stratégie', price: 29, expected_roi: '3 h / semaine', type: 'prompt', timeSaved: '3 h / sem.', tag: 'Essentiel', icon: '✳' },
+  { id: 'veille-marche', title: 'Veille marché augmentée', description: 'Centralisez les signaux utiles et préparez une note de veille synthétique pour vos décisions.', category: 'Direction', price: 59, expected_roi: '5 h / semaine', type: 'mcp', timeSaved: '5 h / sem.', tag: 'Nouveau', icon: '⌘' },
+  { id: 'crm-cleaner', title: 'Nettoyeur intelligent de CRM', description: 'Repérez les doublons, normalisez les champs et préparez une base plus fiable pour vos équipes.', category: 'Opérations', price: 39, expected_roi: '2 h / semaine', type: 'mcp', timeSaved: '2 h / sem.', tag: 'Opérations', icon: '⟡' },
+  { id: 'compte-rendu', title: 'Compte rendu de réunion premium', description: 'Structurez décisions, responsabilités et prochaines étapes à partir de notes brutes.', category: 'Management', price: 19, expected_roi: '2 h / semaine', type: 'prompt', timeSaved: '2 h / sem.', tag: 'Gain rapide', icon: '▤' },
+];
