@@ -50,8 +50,8 @@ export async function POST(request: NextRequest) {
     const status = eventName === 'order_refunded' ? 'refunded' : 'paid';
     const { error } = await admin.from('orders').upsert({
       customer_email: email,
-      product_type: 'skill',
-      product_id: productId,
+      product_type: String(event.meta?.custom_data?.product_type || 'skill') === 'pack' ? 'pack' : String(event.meta?.custom_data?.product_type || 'skill') === 'subscription' ? 'subscription' : 'skill',
+      product_id: String(event.meta?.custom_data?.product_id || productId),
       product_title: productTitle,
       amount,
       currency,
