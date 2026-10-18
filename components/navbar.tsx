@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowUpRight, BookOpen, Bookmark, Command, Compass, LayoutDashboard, Menu, Sparkles, X } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Bookmark, Command, Compass, Cpu, LayoutDashboard, Menu, Sparkles, X } from 'lucide-react';
 
 const links = [
   { href: '/catalogue', label: 'Explorer', icon: Compass },
   { href: '/diagnostic', label: 'Diagnostic IA', icon: Sparkles },
+  { href: '/modeles', label: 'Modèles IA', icon: Cpu },
   { href: '/packs', label: 'Packs', icon: BookOpen },
   { href: '/playbook', label: 'Playbook', icon: Command },
   { href: '/dashboard', label: 'Mon espace', icon: LayoutDashboard },
