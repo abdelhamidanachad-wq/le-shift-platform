@@ -47,7 +47,7 @@ export default function CommerceAdminPage(){
  async function updateStatus(table:string,id:string,status:string){if(!supabase)return;setBusy(true);const {error}=await supabase.from(table).update({status}).eq('id',id);setNotice(error?'Mise à jour impossible.':'Statut mis à jour.');setBusy(false);await load();}
  async function savePack(event:FormEvent<HTMLFormElement>,pack:Row){event.preventDefault();if(!supabase)return;const data=new FormData(event.currentTarget);const price=Number(data.get('price_amount'));const checkout=String(data.get('checkout_url')||'').trim()||null;const {error}=await supabase.from('resource_packs').update({price_amount:price,checkout_url:checkout,status:String(data.get('status')),billing_interval:String(data.get('billing_interval'))}).eq('id',pack.id);setNotice(error?'Impossible de mettre à jour le pack.':'Pack mis à jour.');await load();}
  async function createPack(event:FormEvent<HTMLFormElement>){
-  event.preventDefault();if(!supabase)return;setBusy(true);setNotice('');
+  event.preventDefault();if(!supabase)return;const formElement=event.currentTarget;setBusy(true);setNotice('');
   const data=new FormData(event.currentTarget);
   const slug=String(data.get('slug')||'').trim().toLowerCase();
   const {data:created,error}=await supabase.from('resource_packs').insert({
@@ -61,7 +61,7 @@ export default function CommerceAdminPage(){
     const {error:itemError}=await supabase.from('resource_pack_items').insert(slugs.map((resource_slug,position)=>({pack_id:created.id,resource_slug,position})));
     if(itemError){setBusy(false);setNotice('Pack créé, mais les ressources n’ont pas toutes été associées. Vérifiez les slugs.');await load();return;}
   }
-  setBusy(false);setNotice('Nouveau pack créé.');event.currentTarget.reset();await load();
+  setBusy(false);setNotice('Nouveau pack créé.');formElement.reset();await load();
  }
  async function addWatch(event:FormEvent<HTMLFormElement>){event.preventDefault();if(!supabase)return;setBusy(true);const {error}=await supabase.from('resource_watch_items').insert({source_name:sourceName.trim(),source_url:sourceUrl.trim(),watch_type:sourceType,active:true});setBusy(false);setNotice(error?'Ajout de la source impossible.':'Source de veille ajoutée.');if(!error){setSourceName('');setSourceUrl('');await load();}}
  async function toggleWatch(item:Row){if(!supabase)return;const {error}=await supabase.from('resource_watch_items').update({active:!item.active}).eq('id',item.id);setNotice(error?'Modification impossible.':'Source mise à jour.');await load();}
