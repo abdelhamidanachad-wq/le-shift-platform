@@ -71,16 +71,16 @@ export default function HomePage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-[620px]">
-            <div className="pointer-events-none absolute -inset-10 rounded-full bg-violet-500/[.09] blur-[80px]" />
-            <div className="neon-frame glass-panel relative rounded-[28px] p-4 sm:rounded-[32px] sm:p-6">
+            <div className="nexus-ambient-glow pointer-events-none absolute -inset-10 rounded-full bg-violet-500/[.09] blur-[80px]" />
+            <div className="neon-frame nexus-hero-panel glass-panel relative rounded-[28px] p-4 sm:rounded-[32px] sm:p-6">
               <div className="flex items-center justify-between border-b border-white/[.08] pb-4">
                 <div className="flex items-center gap-2.5"><span className="flex h-8 w-8 items-center justify-center rounded-xl border border-violet-200/15 bg-violet-300/[.08] text-violet-100"><Sparkles size={15}/></span><div><p className="text-xs font-semibold tracking-wide">NEXUS / INTELLIGENCE MAP</p><p className="mt-1 text-[10px] text-zinc-500">Un aperçu de l’expérience LeSHIFT</p></div></div>
                 <span className="rounded-full border border-white/[.09] px-2.5 py-1 text-[9px] uppercase tracking-[.16em] text-zinc-400">Aperçu</span>
               </div>
               <div className="grid items-center gap-4 py-5 sm:grid-cols-[1fr_.88fr] sm:gap-2 sm:py-7">
                 <div className="relative mx-auto aspect-square w-full max-w-[290px]">
-                  <div className="absolute inset-[7%] rounded-full border border-violet-200/[.10]" />
-                  <div className="absolute inset-[20%] rounded-full border border-violet-200/[.13]" />
+                  <div className="nexus-ring absolute inset-[7%] rounded-full border border-violet-200/[.10]" />
+                  <div className="nexus-ring absolute inset-[20%] rounded-full border border-violet-200/[.13]" />
                   <div className="absolute inset-[33%] rounded-full border border-violet-200/[.16]" />
                   <div className="absolute inset-[7%] rounded-full bg-violet-500/[.035] shadow-[0_0_80px_rgba(139,92,246,.13)]" />
                   <svg viewBox="0 0 300 300" className="absolute inset-0 h-full w-full" aria-label="Illustration d'une carte de compétences">
@@ -124,7 +124,7 @@ export default function HomePage() {
 
       <section className="relative mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12">
         <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="mb-3 text-[10px] font-semibold uppercase tracking-[.22em] text-violet-200">Le répertoire</p><h2 className="text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Des leviers concrets, pas du bruit.</h2><p className="mt-3 max-w-xl text-sm leading-6 text-zinc-400">Découvrez les formats d’IA utiles, leurs usages et leurs sources.</p></div><Link href="/catalogue" className="inline-flex items-center gap-2 text-sm text-zinc-300 transition hover:text-violet-100">Explorer les {total} ressources <ArrowRight size={15}/></Link></div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{resourceTypes.map(({name,description,Icon,color})=><Link href="/catalogue" key={name} className="glass-panel resource-card group rounded-2xl p-5"><span className={'mb-6 flex h-11 w-11 items-center justify-center rounded-xl border border-white/[.08] bg-gradient-to-br '+color+' text-violet-100'}><Icon size={20}/></span><h3 className="font-medium">{name}</h3><p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p><span className="mt-5 inline-flex items-center gap-1.5 text-xs text-violet-100">Explorer <ArrowRight size={13} className="transition group-hover:translate-x-1"/></span></Link>)}</div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{resourceTypes.map(({name,description,Icon,color})=><Link href="/catalogue" key={name} className="glass-panel resource-card nexus-card group rounded-2xl p-5"><span className={'mb-6 flex h-11 w-11 items-center justify-center rounded-xl border border-white/[.08] bg-gradient-to-br '+color+' text-violet-100'}><Icon size={20}/></span><h3 className="font-medium">{name}</h3><p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p><span className="mt-5 inline-flex items-center gap-1.5 text-xs text-violet-100">Explorer <ArrowRight size={13} className="transition group-hover:translate-x-1"/></span></Link>)}</div>
       </section>
 
       <section className="relative mx-auto max-w-[1440px] px-5 pb-24 sm:px-8 lg:px-12">
