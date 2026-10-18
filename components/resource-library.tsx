@@ -10,7 +10,7 @@ type Row={id:string;slug:string;title:string;description:string;category:string;
 type UserState={pinned?:boolean;favorite?:boolean;used?:boolean;rating?:number};
 const KEY='le_shift_resource_states_v1';
 function read():Record<string,UserState>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
-function mapRow(r:Row):Skill{return {id:r.slug||r.id,databaseId:r.id,databaseId:r.id,title:r.title,description:r.description,category:r.category,price:Number(r.price_amount||0),priceLabel:r.price_label||'À vérifier',expected_roi:r.time_saved||'À découvrir',type:r.kind==='Serveur MCP'?'mcp':r.kind==='Agent IA'?'agent':r.kind==='Plugin / Extension'?'plugin':r.kind==='Workflow'?'workflow':'prompt',timeSaved:r.time_saved||'À évaluer',tag:r.tag||r.kind,icon:'✳'}}
+function mapRow(r:Row):Skill{return {id:r.slug||r.id,databaseId:r.id,title:r.title,description:r.description,category:r.category,price:Number(r.price_amount||0),priceLabel:r.price_label||'À vérifier',expected_roi:r.time_saved||'À découvrir',type:r.kind==='Serveur MCP'?'mcp':r.kind==='Agent IA'?'agent':r.kind==='Plugin / Extension'?'plugin':r.kind==='Workflow'?'workflow':'prompt',timeSaved:r.time_saved||'À évaluer',tag:r.tag||r.kind,icon:'✳'}}
 
 export default function ResourceLibrary(){
  const [items,setItems]=useState<Skill[]>(fallbackSkills);const [states,setStates]=useState<Record<string,UserState>>({});const [filter,setFilter]=useState<'all'|'pinned'|'favorites'|'used'|'unused'>('all');
