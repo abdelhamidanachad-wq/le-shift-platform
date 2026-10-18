@@ -13,6 +13,8 @@ declare global { interface Window { adsbygoogle?: Record<string, unknown>[] } }
 
 export default function AdSlots({ placement }: { placement: AdPlacement['placement'] }) {
   const [ads, setAds] = useState<AdPlacement[]>([]);
+  const [consent, setConsent] = useState(false);
+  useEffect(() => { const sync = () => setConsent(localStorage.getItem('le_shift_privacy_consent_v1') === 'accepted'); sync(); const onConsent = (event: Event) => setConsent((event as CustomEvent).detail === 'accepted'); window.addEventListener('le-shift-consent-change', onConsent); return () => window.removeEventListener('le-shift-consent-change', onConsent); }, []);
   useEffect(() => {
     if (!supabase) return;
     let active = true;
@@ -25,6 +27,7 @@ export default function AdSlots({ placement }: { placement: AdPlacement['placeme
   return <div className="mx-auto my-5 w-full max-w-7xl space-y-3 px-5 sm:px-8" aria-label="Espaces publicitaires">
     {ads.map(ad => {
       const validAdsense = ad.provider === 'adsense' && /^ca-pub-\d+$/.test(ad.adsense_client || '') && /^\d+$/.test(ad.adsense_slot || '');
+      if (ad.provider === 'adsense' && !consent) return null;
       return <div key={ad.id} className="relative overflow-hidden rounded-2xl border border-white/[.08] bg-white/[.025]">
         {validAdsense ? <AdsenseUnit ad={ad} /> : ad.provider === 'static' && ad.image_url ? <a href={ad.destination_url || '#'} target={ad.destination_url ? '_blank' : undefined} rel={ad.destination_url ? 'sponsored noopener noreferrer' : undefined} onClick={() => { void trackEvent('ad_click', window.location.pathname, 0, {placement, ad_id:ad.id}); }} className="block">
           {/* The image URL is editable by the administrator. */}
