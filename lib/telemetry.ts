@@ -30,7 +30,7 @@ export function getSessionId() {
 }
 
 export async function trackEvent(event_type: EventType, path: string, duration_seconds = 0, metadata: Record<string, unknown> = {}) {
-  if (!supabase || typeof window === 'undefined') return;
+  if (!supabase || typeof window === 'undefined' || localStorage.getItem('le_shift_privacy_consent_v1') !== 'accepted') return;
   const safePath = path.slice(0, 500);
   const { error } = await supabase.from('analytics_events').insert({
     event_type,
