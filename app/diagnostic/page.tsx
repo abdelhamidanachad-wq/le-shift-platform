@@ -42,7 +42,7 @@ function mapCatalog(row:CatalogItem):Skill{
 const type=row.kind==='Serveur MCP'?'mcp':row.kind==='Agent IA'?'agent':row.kind==='Plugin / Extension'?'plugin':row.kind==='Workflow'?'workflow':'prompt';
 return {id:row.slug||row.id,title:row.title,description:row.description,category:row.category,price:Number(row.price_amount??0),priceLabel:row.price_label??'Gratuit',expected_roi:'À découvrir',type,timeSaved:'À découvrir',tag:row.kind,icon:type==='mcp'?'⌁':'✳'};
 }
-function scoreSkill(skill:Skill,selectedTasks:string[],style:string,maturity:string){
+function scoreSkill(skill:Skill,selectedTasks:string[],style:string,maturity:string,budget:string,selectedGoals:string[]){
 const text=(skill.title+' '+skill.description+' '+skill.category+' '+skill.tag).toLowerCase();
 const words=taskCards.filter(t=>selectedTasks.includes(t.id)).flatMap(t=>t.tags);
 let score=0;for(const word of words)if(text.includes(word.toLowerCase()))score+=2;
@@ -51,6 +51,13 @@ if(style==='no-code'&&/workflow|automation|n8n|zapier|make/.test(text))score+=3;
 if(style==='technical'&&/mcp|api|github|developer|code|agent/.test(text))score+=3;
 if(maturity==='beginner'&&/skill|prompt|workflow|starter/.test(text))score+=1;
 if(selectedTasks.includes('development')&&skill.type==='mcp')score+=1;
+if(selectedGoals.some(g=>g.toLowerCase().includes('temps'))&&/automation|workflow|productivity|agent/.test(text))score+=2;
+if(selectedGoals.some(g=>g.toLowerCase().includes('qualité'))&&/evaluation|testing|writing|skill|prompt/.test(text))score+=2;
+if(selectedGoals.some(g=>g.toLowerCase().includes('connecter'))&&/mcp|integration|connect|api|workflow/.test(text))score+=3;
+if(selectedGoals.some(g=>g.toLowerCase().includes('apprendre'))&&/skill|prompt|guide|starter/.test(text))score+=2;
+if(selectedGoals.some(g=>g.toLowerCase().includes('équipe'))&&/team|workflow|agent|automation/.test(text))score+=2;
+if(budget==='free'&&skill.price>0)score-=10;
+if(budget==='low'&&skill.price>39)score-=2;
 return score;
 }
 
@@ -90,7 +97,7 @@ data:Math.min(100,Math.round(15+maturityData.base*.35+(selectedTasks.includes('d
 development:Math.min(100,Math.round(12+maturityData.base*.35+(selectedTasks.includes('development')?35:0)+(style==='technical'?15:0))),
 evaluation:Math.min(100,Math.round(18+quizScore*8+(answers.evaluation==='b'?22:0)+maturityData.base*.25))
 }),[quizScore,maturityData,selectedTasks,answers,style]);
-const recommendations=useMemo(()=>catalog.map(skill=>({...skill,_score:scoreSkill(skill,selectedTasks,style,maturity)})).filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,6),[catalog,selectedTasks,style,maturity]);
+const recommendations=useMemo(()=>catalog.map(skill=>({...skill,_score:scoreSkill(skill,selectedTasks,style,maturity,budget,goalsSelected)})).filter(x=>x._score>0).sort((a,b)=>b._score-a._score).slice(0,6),[catalog,selectedTasks,style,maturity,budget,goalsSelected]);
 const steps=[{title:'Vos objectifs',subtitle:'On part de vos besoins réels.'},{title:'Mini quiz IA',subtitle:'4 questions pour calibrer votre niveau.'},{title:'Votre quotidien',subtitle:'Vos cas d’usage prioritaires.'},{title:'Vos préférences',subtitle:'Un parcours adapté à votre style.'},{title:'Votre carte IA',subtitle:'Votre profil et vos recommandations.'}];
 const skillLabels:[MapKey,string][]=[['prompting','Prompting'],['research','Recherche'],['automation','Automatisation'],['connectors','Connecteurs MCP'],['data','Données'],['development','Développement'],['evaluation','Évaluation & sécurité']];
 function toggleTask(id:string){setSelectedTasks(old=>old.includes(id)?old.filter(x=>x!==id):[...old,id])}
