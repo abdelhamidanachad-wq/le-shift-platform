@@ -5,7 +5,7 @@ import AmbientEffects from '@/components/ambient-effects';
 
 export const metadata: Metadata = {
   title: 'Le Shift — Votre avantage déloyal',
-  description: 'Le catalogue premium de Skills Claude et de serveurs MCP pour les professionnels ambitieux.',
+  description: 'Le répertoire des Claude Skills, serveurs MCP, agents IA, plugins et workflows open source.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
