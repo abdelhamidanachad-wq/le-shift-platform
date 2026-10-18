@@ -19,7 +19,7 @@ export default function AdSlots({ placement }: { placement: AdPlacement['placeme
     if (!supabase) return;
     let active = true;
     void supabase.from('ad_placements').select('*').eq('enabled', true).eq('placement', placement).order('sort_order').then(({data}) => {
-      if (active && data) setAds(data as AdPlacement[]);
+      if (active && data) { setAds(data as AdPlacement[]); for (const ad of data as AdPlacement[]) if (ad.provider === 'static') void trackEvent('ad_impression', window.location.pathname, 0, {placement, ad_id:ad.id, provider:'static'}); }
     });
     return () => { active = false; };
   }, [placement]);
