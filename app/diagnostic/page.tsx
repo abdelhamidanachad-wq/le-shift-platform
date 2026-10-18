@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, BrainCircuit, Check, CheckCircle2, ChevronRight, Clock3, Compass, Gauge, Lightbulb, LockKeyhole, Sparkles, Target, WandSparkles, Zap } from 'lucide-react';
 import { skills as fallbackSkills, type Skill } from '@/lib/skills';
 import { supabase } from '@/lib/supabase';
+import { trackEvent } from '@/lib/telemetry';
 
 const inputClass='mt-2 w-full rounded-xl border border-white/10 bg-[#101013] px-4 py-3 text-sm text-zinc-100 outline-none placeholder:text-zinc-600 focus:border-cyan-200/40';
 const taskCards=[
@@ -111,7 +112,7 @@ if(!email.trim()||!email.includes('@')){setError('Ajoutez un e-mail valide pour 
 setBusy(true);
 const selectedTitles=taskCards.filter(t=>selectedTasks.includes(t.id)).map(t=>t.title);
 const {error:saveError}=await supabase.from('lead_diagnostics').insert({email:email.trim(),full_name:fullName.trim()||null,company:company.trim()||null,role:role.trim()||null,ai_maturity:maturityData.title,weekly_hours:weeklyHours,team_size:teamSize,tasks:selectedTitles,hourly_value:hourlyValue,estimated_hours_saved:Number(estimatedHours.toFixed(1)),estimated_annual_value:Number(annualValue.toFixed(2)),readiness_score:readiness,consent_marketing:consent,quiz_score:quizScore,skill_map:skillMap,preferences:{goals:goalsSelected,tasks:selectedTasks,work_style:style,budget,maturity,answers}});
-setBusy(false);if(saveError){setError('Impossible d’enregistrer votre diagnostic. Vérifiez la connexion et réessayez.');return}setSubmitted(true);
+setBusy(false);if(saveError){setError('Impossible d’enregistrer votre diagnostic. Vérifiez la connexion et réessayez.');return}void trackEvent('diagnostic_complete','/diagnostic',0,{quiz_score:quizScore,readiness_score:readiness});setSubmitted(true);
 }
 return <main className="relative min-h-[80vh] overflow-hidden"><div className="pointer-events-none absolute left-[-180px] top-0 h-[450px] w-[450px] rounded-full bg-cyan-500/[.08] blur-[130px]"/><section className="relative mx-auto max-w-6xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
 <div className="mb-8 max-w-3xl"><div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-200/[.05] px-3 py-2 text-xs text-cyan-100"><Sparkles size={14}/> Diagnostic IA interactif</div><h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">Votre carte de compétences <span className="text-gradient">IA, pas un simple formulaire.</span></h1><p className="mt-4 max-w-2xl text-base leading-7 text-zinc-400">5 étapes interactives, des cartes de choix, un mini quiz, une skill map et des recommandations de Skills, MCP et workflows adaptées à vos objectifs.</p></div>
