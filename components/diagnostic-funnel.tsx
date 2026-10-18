@@ -159,7 +159,7 @@ export default function DiagnosticFunnel() {
       // The parent result screen can continue with in-memory state in a full integration.
     }
     window.dispatchEvent(new CustomEvent('le-shift-funnel-complete', { detail: payload }));
-    window.location.assign('/diagnostic?step=profile');
+    // Keep this component composable: parent integration decides when to advance to profile/results.
   };
 
   return (
