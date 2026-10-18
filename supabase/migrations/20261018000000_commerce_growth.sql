@@ -192,4 +192,5 @@ on conflict do nothing;
 
 grant select on public.resource_packs, public.resource_pack_items to anon, authenticated;
 grant insert on public.lead_diagnostics to anon, authenticated;
+grant select on public.lead_diagnostics to authenticated;
 grant select, insert, update, delete on public.resource_packs, public.resource_pack_items, public.orders, public.subscriptions, public.resource_watch_items, public.weekly_resource_suggestions to authenticated;
