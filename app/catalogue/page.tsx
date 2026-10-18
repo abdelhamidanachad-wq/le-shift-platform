@@ -16,6 +16,7 @@ type CatalogueRow = {
   impact: string | null;
   time_saved: string | null;
   price_amount: number | string | null;
+  price_label: string | null;
   tag: string | null;
   status: string;
 };
@@ -28,6 +29,7 @@ function mapRowToSkill(row: CatalogueRow): Skill {
     description: row.description,
     category: row.category,
     price: Number(row.price_amount ?? 0),
+    priceLabel: row.price_label ?? 'À vérifier',
     expected_roi: row.time_saved ?? 'À découvrir',
     type,
     timeSaved: row.time_saved ?? 'À découvrir',
@@ -50,7 +52,7 @@ export default function CataloguePage() {
     const loadPublishedSkills = async () => {
       const { data, error } = await supabase
         .from('skills')
-        .select('id, slug, title, description, category, kind, impact, time_saved, price_amount, tag, status')
+        .select('id, slug, title, description, category, kind, impact, time_saved, price_amount, price_label, tag, status')
         .eq('status', 'published')
         .order('featured', { ascending: false })
         .order('created_at', { ascending: false });
