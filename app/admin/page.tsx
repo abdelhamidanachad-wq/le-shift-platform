@@ -133,6 +133,8 @@ export default function AdminPage() {
     setBusy(false); setNotice(error?'La modération a échoué.':approved?'Proposition publiée.':'Proposition refusée.'); await load();
   }
 
+  useEffect(() => { if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('tab') === 'growth') setTab('growth'); }, []);
+
   const visibleResources = resources.filter(item => (filter==='all'||item.status===filter) && `${item.title} ${item.category} ${item.kind}`.toLowerCase().includes(search.toLowerCase()));
   const pending = submissions.filter(item=>item.status==='pending').length;
 
