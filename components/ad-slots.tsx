@@ -24,6 +24,7 @@ export default function AdSlots({ placement }: { placement: AdPlacement['placeme
     return () => { active = false; };
   }, [placement]);
 
+  if (!ads.length) return null;
   return <div className="mx-auto my-5 w-full max-w-7xl space-y-3 px-5 sm:px-8" aria-label="Espaces publicitaires">
     {ads.map(ad => {
       const validAdsense = ad.provider === 'adsense' && /^ca-pub-\d+$/.test(ad.adsense_client || '') && /^\d+$/.test(ad.adsense_slot || '');
