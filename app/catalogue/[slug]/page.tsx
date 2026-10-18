@@ -12,7 +12,7 @@ type DetailRow = {
   title: string;
   description: string;
   category: string;
-  kind: 'Skill Claude' | 'Serveur MCP';
+  kind: 'Skill Claude' | 'Serveur MCP' | 'Agent IA' | 'Plugin / Extension' | 'Workflow';
   impact: string | null;
   time_saved: string | null;
   price_label: string | null;
@@ -46,7 +46,7 @@ function fromDatabase(row: DetailRow): Resource {
     timeSaved: row.time_saved ?? 'À découvrir',
     tag: row.tag ?? row.impact ?? (type === 'mcp' ? 'Serveur MCP' : 'Skill Claude'),
     icon: type === 'mcp' ? '⌁' : '✳',
-    priceLabel: row.price_label || (price === 0 ? 'Gratuit' : 'Payant'),
+    priceLabel: row.price_label || 'À vérifier',
     currency: row.currency || 'EUR',
     impact: row.impact || 'Productivité',
     websiteUrl: row.website_url || undefined,

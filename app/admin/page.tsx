@@ -44,16 +44,27 @@ export default function AdminPage() {
     setBusy(false);
   },[]);
 
+  const verifySuperadmin = useCallback(async (user: { id: string; email?: string }) => {
+    if (!supabase || user.email?.toLowerCase() !== 'abdel@leshift.fr') return false;
+    const { data, error } = await supabase.from('admin_users').select('user_id').eq('user_id', user.id).maybeSingle();
+    return !error && Boolean(data?.user_id);
+  }, []);
+
   useEffect(() => {
-    if (!supabase) return;
-    void supabase.auth.getSession().then(async ({data}) => {
+    const client = supabase;
+    if (!client) return;
+    void client.auth.getSession().then(async ({data}) => {
       const user = data.session?.user;
       if (!user) return;
-      if (user.email?.toLowerCase() !== 'abdel@leshift.fr') { await supabase.auth.signOut(); setNotice('Accès réservé au superadministrateur.'); return; }
-      setUserEmail(user.email);
+      if (!(await verifySuperadmin(user))) {
+        await client.auth.signOut();
+        setNotice('Accès réservé au compte superadministrateur activé dans Supabase.');
+        return;
+      }
+      setUserEmail(user.email ?? null);
       await load();
     });
-  },[load]);
+  },[load,verifySuperadmin]);
 
   async function login(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setNotice('');
@@ -62,8 +73,8 @@ export default function AdminPage() {
     const {data,error} = await supabase.auth.signInWithPassword({email:email.trim(),password});
     setBusy(false);
     if (error || !data.user) { setNotice('Connexion refusée. Vérifiez vos identifiants et que le compte Auth existe dans Supabase.'); return; }
-    if (data.user.email?.toLowerCase() !== 'abdel@leshift.fr') { await supabase.auth.signOut(); setNotice('Cette adresse n’est pas autorisée à accéder au panneau admin.'); return; }
-    setUserEmail(data.user.email); setPassword(''); await load();
+    if (!(await verifySuperadmin(data.user))) { await supabase.auth.signOut(); setNotice('Ce compte n’est pas encore activé comme superadministrateur dans Supabase.'); return; }
+    setUserEmail(data.user.email ?? null); setPassword(''); await load();
   }
 
   async function logout() { if (supabase) await supabase.auth.signOut(); setUserEmail(null); setResources([]); setSubmissions([]); }
