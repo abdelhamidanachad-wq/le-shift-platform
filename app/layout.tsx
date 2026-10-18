@@ -6,9 +6,9 @@ import SiteAnalytics from '@/components/site-analytics';
 import AdSlots from '@/components/ad-slots';
 import PrivacyConsent from '@/components/privacy-consent';
 
-export const metadata: Metadata = {
-  title: 'Le Shift — Votre avantage déloyal',
-  description: 'Le répertoire des Claude Skills, serveurs MCP, agents IA, plugins et workflows open source.',
+export const metadata: Metadata = {\n  applicationName: 'LeSHIFT',\n  themeColor: '#08070d',
+  title: 'LeSHIFT — Intelligence, in motion',
+  description: 'Cartographiez votre potentiel IA, découvrez les bons skills, agents et workflows, puis transformez-les en résultats concrets. LeSHIFT — Intelligence, in motion.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
