@@ -46,11 +46,12 @@ export default function CataloguePage() {
   const [impact, setImpact] = useState('Tous les impacts');
 
   useEffect(() => {
-    if (!supabase) return;
+    const client = supabase;
+    if (!client) return;
     let active = true;
 
     const loadPublishedSkills = async () => {
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from('skills')
         .select('id, slug, title, description, category, kind, impact, time_saved, price_amount, price_label, tag, status')
         .eq('status', 'published')
