@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowUpRight, BookOpen, ChevronDown, Command, Compass, LayoutDashboard, Menu, Sparkles, X } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Command, Compass, LayoutDashboard, Menu, Sparkles, X } from 'lucide-react';
 
 const links = [
   { href: '/catalogue', label: 'Explorer', icon: Compass },
