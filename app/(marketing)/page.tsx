@@ -115,6 +115,18 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="relative mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 lg:px-12">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.22em] text-violet-200">Votre écosystème IA</p><h2 className="mt-2 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">Les outils que vous utilisez. Ceux que vous allez découvrir.</h2></div><Link href="/modeles" className="inline-flex items-center gap-2 text-sm text-violet-100 hover:text-white">Explorer les modèles <ArrowRight size={14}/></Link></div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{[
+          {name:'ChatGPT',maker:'OpenAI',logo:'https://cdn.simpleicons.org/openai/FFFFFF'},
+          {name:'Claude',maker:'Anthropic',logo:'https://cdn.simpleicons.org/anthropic/FFFFFF'},
+          {name:'Gemini',maker:'Google',logo:'https://cdn.simpleicons.org/googlegemini/FFFFFF'},
+          {name:'Le Chat',maker:'Mistral AI',logo:'https://cdn.simpleicons.org/mistralai/FFFFFF'},
+          {name:'Hugging Face',maker:'Modèles ouverts',logo:'https://cdn.simpleicons.org/huggingface/FFFFFF'},
+          {name:'Ollama',maker:'IA locale',logo:'https://cdn.simpleicons.org/ollama/FFFFFF'}
+        ].map(tool=><Link key={tool.name} href="/modeles" className="nexus-card glass-panel group flex min-h-[116px] flex-col items-center justify-center rounded-2xl p-4 text-center"><span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[.08] bg-white/[.035] transition group-hover:border-violet-200/25"><img src={tool.logo} alt={tool.name+' logo'} loading="lazy" className="h-6 w-6 object-contain"/></span><span className="mt-3 text-sm font-semibold">{tool.name}</span><span className="mt-1 text-[10px] text-zinc-500">{tool.maker}</span></Link>)}</div>
+      </section>
+
       <section className="relative mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-12">
         <div className="mb-8 max-w-2xl"><p className="mb-3 text-[10px] font-semibold uppercase tracking-[.22em] text-violet-200">Votre trajectoire</p><h2 className="text-3xl font-semibold tracking-[-.04em] sm:text-4xl">De la curiosité à la maîtrise.</h2><p className="mt-3 text-sm leading-6 text-zinc-400">Un chemin lisible pour passer du « je devrais utiliser l’IA » à « je sais quoi utiliser et pourquoi ».</p></div>
         <div className="grid gap-0 border-y border-white/[.08] md:grid-cols-3 md:divide-x md:divide-white/[.08]">
