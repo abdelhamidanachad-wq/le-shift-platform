@@ -7,9 +7,9 @@ import { ArrowLeft, BarChart3, CreditCard, LayoutDashboard, Megaphone, Settings2
 
 const adminLinks = [
   { href: '/admin', label: 'Vue générale', icon: LayoutDashboard, exact: true },
-  { href: '/admin?tab=growth', label: 'Analytics & publicités', icon: BarChart3, exact: false },
+  { href: '/admin?tab=growth', label: 'Publicités & analytics', icon: BarChart3, exact: false },
   { href: '/admin/commerce', label: 'Commerce & paiements', icon: CreditCard, exact: true },
-  { href: '/admin/settings', label: 'Paramètres & intégrations', icon: Settings2, exact: true },
+  { href: '/admin/settings', label: 'Ads, bannières & API', icon: Settings2, exact: true },
 ];
 
 export default function AdminPanelLayout({ children, title = 'Control Room', description = 'Pilotez votre plateforme NEXUS.' }: PropsWithChildren<{ title?: string; description?: string }>) {
