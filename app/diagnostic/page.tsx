@@ -37,6 +37,18 @@ const workStyles=[
 {id:'no-code',title:'No-code / automatisation',desc:'Connecter les outils et automatiser sans développer.'},
 {id:'technical',title:'Technique et personnalisable',desc:'Configuration, API, code et contrôle fin.'}
 ];
+
+const professionOptions = [
+  { title: 'Marketing & communication', detail: 'Contenu, campagnes et acquisition', icon: '✳' },
+  { title: 'Direction & management', detail: 'Décisions, stratégie et équipes', icon: '◈' },
+  { title: 'Commercial & relation client', detail: 'Prospection, CRM et support', icon: '↗' },
+  { title: 'Opérations & automatisation', detail: 'Processus, coordination et productivité', icon: '⤳' },
+  { title: 'Data, finance & reporting', detail: 'Analyse, indicateurs et prévisions', icon: '▥' },
+  { title: 'Tech, produit & développement', detail: 'Code, APIs et systèmes', icon: '⌘' },
+  { title: 'RH, formation & conseil', detail: 'Recrutement, accompagnement et apprentissage', icon: '◎' },
+  { title: 'Autre métier', detail: 'Je préciserai ma fonction dans mon profil', icon: '＋' },
+];
+
 type CatalogItem={id:string;slug:string;title:string;description:string;category:string;kind:string;price_amount:number|string|null;price_label:string|null};
 type MapKey='prompting'|'research'|'automation'|'connectors'|'data'|'development'|'evaluation';
 type SkillMap=Record<MapKey,number>;
@@ -78,6 +90,7 @@ const [email,setEmail]=useState('');
 const [fullName,setFullName]=useState('');
 const [company,setCompany]=useState('');
 const [role,setRole]=useState('');
+const [roleConfirmed,setRoleConfirmed]=useState(false);
 const [consent,setConsent]=useState(false);
 const [catalog,setCatalog]=useState<Skill[]>(fallbackSkills);
 const [busy,setBusy]=useState(false);
@@ -115,6 +128,17 @@ const selectedTitles=taskCards.filter(t=>selectedTasks.includes(t.id)).map(t=>t.
 const {error:saveError}=await supabase.from('lead_diagnostics').insert({email:email.trim(),full_name:fullName.trim()||null,company:company.trim()||null,role:role.trim()||null,ai_maturity:maturityData.title,weekly_hours:weeklyHours,team_size:teamSize,tasks:selectedTitles,hourly_value:hourlyValue,estimated_hours_saved:Number(estimatedHours.toFixed(1)),estimated_annual_value:Number(annualValue.toFixed(2)),readiness_score:readiness,consent_marketing:consent,quiz_score:quizScore,skill_map:skillMap,preferences:{goals:goalsSelected,tasks:selectedTasks,work_style:style,budget,maturity,answers}});
 setBusy(false);if(saveError){setError('Impossible d’enregistrer votre diagnostic. Vérifiez la connexion et réessayez.');return}try{localStorage.setItem('le_shift_latest_diagnostic_v1',JSON.stringify({readiness,estimatedHours:Number(estimatedHours.toFixed(1)),annualValue:Number(annualValue.toFixed(2)),quizScore,quizTotal:quiz.length,skillMap,savedAt:new Date().toISOString(),recommendations:recommendations.slice(0,6).map(item=>({id:item.id,title:item.title,category:item.category}))}))}catch{}void trackEvent('diagnostic_complete','/diagnostic',0,{quiz_score:quizScore,readiness_score:readiness});setSubmitted(true);
 }
+if (!roleConfirmed) return <main className="relative min-h-[85vh] overflow-hidden px-5 py-12 sm:px-8 sm:py-16">
+  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(139,92,246,.20),transparent_62%)]"/>
+  <section className="relative mx-auto max-w-5xl">
+    <div className="mx-auto max-w-3xl text-center"><span className="inline-flex items-center gap-2 rounded-full border border-violet-200/20 bg-violet-300/[.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[.2em] text-violet-100"><Sparkles size={13}/> NEXUS · Diagnostic personnalisé</span><p className="mt-5 text-xs uppercase tracking-[.22em] text-cyan-200">Étape 01 / 09</p><h1 className="mt-3 text-4xl font-semibold leading-tight tracking-[-.045em] sm:text-6xl">Commençons par <span className="text-gradient">votre métier.</span></h1><p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">LeSHIFT adapte le diagnostic, les recommandations et les automatisations à votre quotidien professionnel. Choisissez le profil qui vous ressemble le plus.</p></div>
+    <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{professionOptions.map((option,index)=><button key={option.title} type="button" onClick={()=>{setRole(option.title);setRoleConfirmed(true);void trackEvent('diagnostic_start','/diagnostic',0,{role:option.title});}} className="group relative min-h-[148px] overflow-hidden rounded-2xl border border-white/[.09] bg-white/[.025] p-4 text-left transition duration-300 hover:-translate-y-1 hover:border-violet-200/35 hover:bg-violet-300/[.06] hover:shadow-[0_18px_55px_rgba(109,40,217,.15)] motion-safe:animate-[fade-up_.5s_ease_both]" style={{animationDelay:(index*55)+'ms'}}>
+      <span className="absolute right-3 top-3 text-[10px] text-zinc-600">0{index+1}</span><span className="flex h-11 w-11 items-center justify-center rounded-xl border border-violet-200/15 bg-violet-300/[.07] text-lg text-violet-100 transition group-hover:border-cyan-200/25 group-hover:bg-cyan-200/[.08] group-hover:text-cyan-100">{option.icon}</span><span className="mt-4 block text-sm font-semibold text-white">{option.title}</span><span className="mt-1.5 block text-xs leading-5 text-zinc-500">{option.detail}</span><span className="pointer-events-none absolute inset-x-4 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-violet-200 to-cyan-200 transition-transform duration-300 group-hover:scale-x-100"/>
+    </button>)}</div>
+    <p className="mt-6 text-center text-xs text-zinc-600">Vous pourrez préciser votre fonction et votre entreprise à la dernière étape. Vos réponses ne sont pas publiées.</p>
+  </section>
+</main>;
+
 return <main className="relative min-h-[80vh] overflow-hidden"><div className="pointer-events-none absolute left-[-180px] top-0 h-[450px] w-[450px] rounded-full bg-cyan-500/[.08] blur-[130px]"/><section className="relative mx-auto max-w-6xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
 <div className="mb-8 max-w-3xl"><div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-200/[.05] px-3 py-2 text-xs text-cyan-100"><Sparkles size={14}/> Diagnostic IA interactif</div><h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">Votre carte de compétences <span className="text-gradient">IA, pas un simple formulaire.</span></h1><p className="mt-4 max-w-2xl text-base leading-7 text-zinc-400">8 écrans courts, un quiz progressif, une heatmap de compétences et des recommandations de Skills, MCP et workflows adaptées à vos objectifs.</p></div>
 <AdSlots placement="diagnostic"/>
