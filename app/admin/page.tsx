@@ -51,12 +51,13 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (!supabase) return;
-    void supabase.auth.getSession().then(async ({data}) => {
+    const client = supabase;
+    if (!client) return;
+    void client.auth.getSession().then(async ({data}) => {
       const user = data.session?.user;
       if (!user) return;
       if (!(await verifySuperadmin(user))) {
-        await supabase.auth.signOut();
+        await client.auth.signOut();
         setNotice('Accès réservé au compte superadministrateur activé dans Supabase.');
         return;
       }
