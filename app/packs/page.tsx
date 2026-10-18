@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, Boxes, CheckCircle2, PackageCheck, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-type PackItem={resource_slug:string;position:number};\ntype Pack = { id:string; slug:string; title:string; description:string; price_amount:number|string; currency:string; billing_interval:string; checkout_url:string|null; featured:boolean; items?:PackItem[] };
+type PackItem={resource_slug:string;position:number};
+type Pack = { id:string; slug:string; title:string; description:string; price_amount:number|string; currency:string; billing_interval:string; checkout_url:string|null; featured:boolean; items?:PackItem[] };
 const fallback:Pack[]=[
  {id:'1',slug:'ai-workday-starter',title:'AI Workday Starter',description:'Une sélection de skills, MCP et workflows pour éliminer les tâches répétitives du quotidien professionnel.',price_amount:19,currency:'EUR',billing_interval:'one_time',checkout_url:null,featured:true},
  {id:'2',slug:'marketing-growth-stack',title:'Marketing & Growth Stack',description:'Recherche, veille concurrentielle, contenu et analyse de performance pour les équipes marketing.',price_amount:39,currency:'EUR',billing_interval:'one_time',checkout_url:null,featured:true},
