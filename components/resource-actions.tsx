@@ -26,6 +26,7 @@ export default function ResourceActions({resourceKey, resourceUuid}: {resourceKe
     all[resourceKey] = next;
     try { localStorage.setItem(STORAGE_KEY,JSON.stringify(all)); } catch {}
     setState(next);
+    window.dispatchEvent(new CustomEvent('le-shift-resource-state-change'));
   }
   async function rate(value:number) {
     patch({rating:value});
