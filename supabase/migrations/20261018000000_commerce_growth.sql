@@ -112,6 +112,7 @@ create index if not exists orders_status_idx on public.orders(status);
 create index if not exists subscriptions_status_idx on public.subscriptions(status);
 create index if not exists lead_diagnostics_created_at_idx on public.lead_diagnostics(created_at desc);
 create index if not exists weekly_suggestions_week_idx on public.weekly_resource_suggestions(week_start desc);
+create unique index if not exists weekly_suggestions_url_week_uidx on public.weekly_resource_suggestions(url, week_start);
 
 alter table public.resource_packs enable row level security;
 alter table public.resource_pack_items enable row level security;
