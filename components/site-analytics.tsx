@@ -10,6 +10,8 @@ export default function SiteAnalytics() {
     const started = Date.now();
     let sent = false;
     void trackEvent('page_view', path);
+    const onConsent = (event: Event) => { if ((event as CustomEvent).detail === 'accepted') void trackEvent('page_view', path); };
+    window.addEventListener('le-shift-consent-change', onConsent);
     const sendExit = () => {
       if (sent) return;
       sent = true;
@@ -20,6 +22,7 @@ export default function SiteAnalytics() {
     document.addEventListener('visibilitychange', onVisibility);
     return () => {
       sendExit();
+      window.removeEventListener('le-shift-consent-change', onConsent);
       window.removeEventListener('pagehide', sendExit);
       document.removeEventListener('visibilitychange', onVisibility);
     };
