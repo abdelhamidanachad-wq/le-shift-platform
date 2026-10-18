@@ -57,9 +57,11 @@ function fromDatabase(row: DetailRow): Resource {
 function fromFallback(skill: Skill): Resource {
   return {
     ...skill,
-    priceLabel: skill.price === 0 ? 'Gratuit' : 'Payant',
+    priceLabel: skill.priceLabel || (skill.price === 0 ? 'À vérifier' : 'Payant'),
     currency: 'EUR',
     impact: skill.tag,
+    websiteUrl: skill.websiteUrl,
+    documentationUrl: skill.documentationUrl,
   };
 }
 
