@@ -158,8 +158,8 @@ values
  ('developer-automation-stack','Developer Automation Stack','Outils de dépôt, navigation web, tests et orchestration pour les équipes produit et tech.',49,'EUR','one_time','published',false)
 on conflict (slug) do nothing;
 
-insert into public.resource_pack_items(pack_id,resource_slug,position)
-select p.id, x.slug, x.position
+insert into public.resource_pack_items(pack_id,skill_id,resource_slug,position)
+select p.id, s.id, x.slug, x.position
 from (values
  ('ai-workday-starter','anthropics-skills',1),
  ('ai-workday-starter','mcp-servers',2),
@@ -169,6 +169,7 @@ from (values
  ('developer-automation-stack','langgraph',3)
 ) as x(pack_slug,slug,position)
 join public.resource_packs p on p.slug=x.pack_slug
+left join public.skills s on s.slug=x.slug
 on conflict (pack_id,resource_slug) do nothing;
 
 insert into public.resource_watch_items(source_name,source_url,watch_type,notes)
