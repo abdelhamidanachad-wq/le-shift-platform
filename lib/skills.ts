@@ -1,5 +1,6 @@
 export type Skill = {
   id: string;
+  databaseId?: string;
   title: string;
   description: string;
   category: string;
