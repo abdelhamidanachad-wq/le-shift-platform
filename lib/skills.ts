@@ -1,11 +1,25 @@
-export type Skill = { id: string; title: string; description: string; category: string; price: number; priceLabel?: string; expected_roi: string; type: 'mcp' | 'prompt' | 'agent' | 'plugin' | 'workflow'; timeSaved: string; tag: string; icon: string };
+export type Skill = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  priceLabel?: string;
+  expected_roi: string;
+  type: 'mcp' | 'prompt' | 'agent' | 'plugin' | 'workflow';
+  timeSaved: string;
+  tag: string;
+  icon: string;
+  websiteUrl?: string;
+  documentationUrl?: string;
+};
 
-// Temporary catalogue data; replace with Supabase queries once credentials are configured.
+// Public GitHub projects used as a resilient fallback if Supabase is unavailable.
 export const skills: Skill[] = [
-  { id: 'audit-financier', title: 'Générateur d’audit financier', description: 'Transformez vos exports comptables en synthèses structurées, anomalies à vérifier et recommandations actionnables.', category: 'Finance & Audit', price: 49, expected_roi: '4 h / semaine', type: 'prompt', timeSaved: '4 h / sem.', tag: 'Productivité', icon: '◈' },
-  { id: 'scraper-seo', title: 'Radar SEO concurrentiel', description: 'Cartographiez les mots-clés, les écarts de contenu et les opportunités organiques de votre marché.', category: 'Marketing & SEO', price: 79, expected_roi: '6 h / semaine', type: 'mcp', timeSaved: '6 h / sem.', tag: 'Très demandé', icon: '⌁' },
-  { id: 'brief-strategique', title: 'Brief stratégique express', description: 'Passez d’un brief diffus à un plan clair : enjeux, audiences, angles créatifs et indicateurs de réussite.', category: 'Stratégie', price: 29, expected_roi: '3 h / semaine', type: 'prompt', timeSaved: '3 h / sem.', tag: 'Essentiel', icon: '✳' },
-  { id: 'veille-marche', title: 'Veille marché augmentée', description: 'Centralisez les signaux utiles et préparez une note de veille synthétique pour vos décisions.', category: 'Direction', price: 59, expected_roi: '5 h / semaine', type: 'mcp', timeSaved: '5 h / sem.', tag: 'Nouveau', icon: '⌘' },
-  { id: 'crm-cleaner', title: 'Nettoyeur intelligent de CRM', description: 'Repérez les doublons, normalisez les champs et préparez une base plus fiable pour vos équipes.', category: 'Opérations', price: 39, expected_roi: '2 h / semaine', type: 'mcp', timeSaved: '2 h / sem.', tag: 'Opérations', icon: '⟡' },
-  { id: 'compte-rendu', title: 'Compte rendu de réunion premium', description: 'Structurez décisions, responsabilités et prochaines étapes à partir de notes brutes.', category: 'Management', price: 19, expected_roi: '2 h / semaine', type: 'prompt', timeSaved: '2 h / sem.', tag: 'Gain rapide', icon: '▤' },
+  { id: 'anthropics-skills', title: 'Anthropic Skills', description: 'Exemples de skills et d’instructions réutilisables pour structurer des tâches avec Claude.', category: 'Claude Skills', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'prompt', timeSaved: 'À évaluer', tag: 'GitHub officiel', icon: '✳', websiteUrl: 'https://github.com/anthropics/skills', documentationUrl: 'https://github.com/anthropics/skills#readme' },
+  { id: 'mcp-servers', title: 'Model Context Protocol Servers', description: 'Répertoire de référence d’implémentations de serveurs MCP et de connecteurs.', category: 'Écosystème MCP', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'mcp', timeSaved: 'À évaluer', tag: 'Référence MCP', icon: '⌁', websiteUrl: 'https://github.com/modelcontextprotocol/servers', documentationUrl: 'https://github.com/modelcontextprotocol/servers#readme' },
+  { id: 'github-mcp-server', title: 'GitHub MCP Server', description: 'Expose les opérations GitHub comme outils pour les clients compatibles MCP.', category: 'Développement', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'mcp', timeSaved: 'À évaluer', tag: 'Developer tools', icon: '⌘', websiteUrl: 'https://github.com/github/github-mcp-server', documentationUrl: 'https://github.com/github/github-mcp-server#readme' },
+  { id: 'playwright-mcp', title: 'Playwright MCP', description: 'Connecteur de navigateur pour automatiser des parcours et inspecter des pages web.', category: 'Automatisation web', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'mcp', timeSaved: 'À évaluer', tag: 'Browser automation', icon: '◈', websiteUrl: 'https://github.com/microsoft/playwright-mcp', documentationUrl: 'https://github.com/microsoft/playwright-mcp#readme' },
+  { id: 'langgraph', title: 'LangGraph', description: 'Framework pour construire des agents et workflows IA avec état et orchestration.', category: 'Agents IA', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'agent', timeSaved: 'À évaluer', tag: 'Agent framework', icon: '◉', websiteUrl: 'https://github.com/langchain-ai/langgraph', documentationUrl: 'https://github.com/langchain-ai/langgraph#readme' },
+  { id: 'n8n', title: 'n8n', description: 'Plateforme d’automatisation de workflows avec un large écosystème d’intégrations.', category: 'Workflows', price: 0, priceLabel: 'À vérifier', expected_roi: 'Selon usage', type: 'workflow', timeSaved: 'À évaluer', tag: 'Automation', icon: '⟳', websiteUrl: 'https://github.com/n8n-io/n8n', documentationUrl: 'https://github.com/n8n-io/n8n#readme' },
 ];
