@@ -249,3 +249,57 @@ a, button, input, select, textarea { transition-timing-function: cubic-bezier(.2
   .site-grid, .neon-frame, .text-gradient, .neon-frame:before { animation: none !important; }
   .glass-panel::after, .neon-button::before { display: none; }
 }
+
+
+/* NEXUS visual polish: cinematic light, responsive motion, and clear focus states. */
+.nexus-hero-panel {
+  isolation: isolate;
+  box-shadow: 0 30px 110px rgba(0,0,0,.42), 0 0 70px rgba(139,92,246,.12), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.nexus-hero-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--frame-angle, 0deg), rgba(196,181,253,.42), transparent 18%, rgba(34,211,238,.32) 34%, transparent 55%, rgba(216,180,254,.32) 78%, transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .75;
+  animation: frame-rotate 18s linear infinite;
+}
+.nexus-ambient-glow {
+  animation: nexus-glow-breathe 8s ease-in-out infinite alternate;
+}
+.nexus-ring {
+  border-color: rgba(196,181,253,.14);
+  box-shadow: 0 0 34px rgba(139,92,246,.05), inset 0 0 34px rgba(34,211,238,.025);
+  animation: nexus-ring-breathe 7s ease-in-out infinite alternate;
+}
+.nexus-ring:nth-child(2) { animation-delay: -2.5s; }
+.nexus-ring:nth-child(3) { animation-delay: -4.5s; }
+.nexus-card {
+  transition: transform .32s cubic-bezier(.2,.7,.2,1), border-color .32s, background .32s, box-shadow .32s;
+}
+.nexus-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 55px rgba(91,33,182,.16), inset 0 1px 0 rgba(255,255,255,.06);
+}
+@keyframes nexus-glow-breathe {
+  from { opacity: .45; transform: scale(.96); }
+  to { opacity: .9; transform: scale(1.06); }
+}
+@keyframes nexus-ring-breathe {
+  from { opacity: .45; border-color: rgba(196,181,253,.09); }
+  to { opacity: .95; border-color: rgba(103,232,249,.22); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexus-hero-panel::before, .nexus-ambient-glow, .nexus-ring, .nexus-card { animation: none !important; transition: none !important; }
+}
