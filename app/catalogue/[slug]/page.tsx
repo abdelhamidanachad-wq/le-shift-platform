@@ -21,6 +21,8 @@ type DetailRow = {
   tag: string | null;
   website_url: string | null;
   documentation_url: string | null;
+  checkout_url?: string | null;
+  pricing_model?: string | null;
   status: string;
 };
 
@@ -30,6 +32,8 @@ type Resource = Skill & {
   impact: string;
   websiteUrl?: string;
   documentationUrl?: string;
+  checkoutUrl?: string;
+  pricingModel?: string;
 };
 
 function fromDatabase(row: DetailRow): Resource {
@@ -50,7 +54,9 @@ function fromDatabase(row: DetailRow): Resource {
     currency: row.currency || 'EUR',
     impact: row.impact || 'Productivité',
     websiteUrl: row.website_url || undefined,
-    documentationUrl: row.documentation_url || undefined,\n    checkoutUrl: row.checkout_url || undefined,\n    pricingModel: row.pricing_model || 'free',
+    documentationUrl: row.documentation_url || undefined,
+    checkoutUrl: row.checkout_url || undefined,
+    pricingModel: row.pricing_model || 'free',
   };
 }
 
@@ -61,7 +67,9 @@ function fromFallback(skill: Skill): Resource {
     currency: 'EUR',
     impact: skill.tag,
     websiteUrl: skill.websiteUrl,
-    documentationUrl: skill.documentationUrl,\n    checkoutUrl: undefined,\n    pricingModel: 'free',
+    documentationUrl: skill.documentationUrl,
+    checkoutUrl: undefined,
+    pricingModel: 'free',
   };
 }
 
