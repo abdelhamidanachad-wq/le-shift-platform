@@ -1,4 +1,4 @@
-export type Skill = { id: string; title: string; description: string; category: string; price: number; expected_roi: string; type: 'mcp' | 'prompt'; timeSaved: string; tag: string; icon: string };
+export type Skill = { id: string; title: string; description: string; category: string; price: number; expected_roi: string; type: 'mcp' | 'prompt' | 'agent' | 'plugin' | 'workflow'; timeSaved: string; tag: string; icon: string };
 
 // Temporary catalogue data; replace with Supabase queries once credentials are configured.
 export const skills: Skill[] = [
