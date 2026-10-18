@@ -32,7 +32,7 @@ export default function ResourceActions({resourceKey, resourceUuid}: {resourceKe
     patch({rating:value});
     if (supabase && resourceUuid) {
       const visitor_id = getVisitorId();
-      const {error} = await supabase.from('resource_ratings').upsert({skill_id:resourceUuid,visitor_id,rating:value},{onConflict:'skill_id,visitor_id'});
+      const {error} = await supabase.rpc('save_resource_rating',{p_skill_id:resourceUuid,p_visitor_id:visitor_id,p_rating:value});
       if (!error) {
         const {data} = await supabase.from('resource_rating_summary').select('average_rating,rating_count').eq('skill_id',resourceUuid).maybeSingle();
         if (data) {setAverage(Number(data.average_rating));setRatingCount(Number(data.rating_count));}
